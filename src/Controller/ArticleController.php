@@ -17,10 +17,12 @@ class ArticleController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         // Get all entities from Article table
         $articles = $em->getRepository(FirstArticle::class)->findAll();
+        //FindBy Permet de recuperer les articles publié
+        $articlesPublished = $em->getRepository(FirstArticle::class)->findBy(['published' => false]);
 
         return $this->render('article/index.html.twig', [
             'controller_name' => 'ArticleController',
-            'articles' => $articles,
+            'articles' => $articlesPublished,
         ]);
     }
 }       
