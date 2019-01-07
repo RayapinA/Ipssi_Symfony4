@@ -10,6 +10,13 @@
 
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
+    <ul>
+        {% for article in articles %}
+            <li>
+                {{article.id}}  - {{article.name}} 
+            </li>
+        {% endfor %}
+    </ul>
 
     This friendly message is coming from:
     <ul>
