@@ -20,4 +20,5 @@ class FirstArticle
     {
         return $this->id;
     }
+    
 }
