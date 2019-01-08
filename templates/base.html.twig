@@ -4,7 +4,11 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <header>  
+            <a href="{{ path("home")}}"> Home </a> 
+        </header>
     </head>
+    
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

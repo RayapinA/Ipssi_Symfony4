@@ -13,17 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user/{byFirstName}", name="user")
-     * @ParamConverter("user",options ={"mapping" = {"byFirstName" = "firstname"}})
+     * @Route("/user", name="user")
      */
     public function index(Request $request, UserRepository $userRepository)
     {
-        // get the Doctrine Manager
-        //$em = $this->getDoctrine()->getManager();
-        // Get all entities from Users table
         $users = $userRepository->findAll();
 
-        dump($users);exit();
+        //dump($users);exit();
         $user = new User();
         $form = $this->createForm(UserType::class,$user);
         $form->handleRequest($request);
@@ -49,4 +45,37 @@ class UserController extends AbstractController
             'users' => $users,
         ]);
     }
+
+    /**
+     * @Route("/user/{firstname}", name="userby")
+     */
+    public function indexById(Request $request, UserRepository $userRepository, User $user)
+    {
+        
+        //$currentUser = $userRepository->findBy('id');
+        //$user = new User();
+        $form = $this->createForm(UserType::class,$user);
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted() &&  $form->isValid()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+
+            unset($entityManager);
+            unset($form);
+            $entityManager = $this->getDoctrine()->getManager();
+            $form = $this->createForm(UserType::class,$user);
+
+            //$this->redirectToRoute('register success')
+        }
+
+        return $this->render('user/oneUser.html.twig', [
+            'controller_name' => 'UserController',
+            'user' => $user,
+        ]);
+    }
+    
 }

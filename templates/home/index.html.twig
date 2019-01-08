@@ -9,13 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    {# <h1>Hello {{ controller_name }}! ✅</h1> #}
     <h1> Bienvenue sur la Home Page de mon site </h1>
     
         {% for user in users %}
             <h1>  {{ user.firstname }} </h1>
             {% for article in user.articles %}
-                 <p> {{ article.name }}  -  {{ article.createdAt|date }} </p>
+                 <p> {{ article.name }}  -  {{ article.createdAt|date }} -  <a href="{{ path("home")}}"> Home </a>  </p>
             {% endfor %}
         {% endfor %}
     
