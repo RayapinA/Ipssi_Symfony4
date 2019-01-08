@@ -6,13 +6,15 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/user/{byFirstName}", name="user")
+     * @ParamConverter("user",options ={"mapping" = {"byFirstName" = "firstname"}})
      */
     public function index(Request $request, UserRepository $userRepository)
     {
@@ -21,6 +23,7 @@ class UserController extends AbstractController
         // Get all entities from Users table
         $users = $userRepository->findAll();
 
+        dump($users);exit();
         $user = new User();
         $form = $this->createForm(UserType::class,$user);
         $form->handleRequest($request);
