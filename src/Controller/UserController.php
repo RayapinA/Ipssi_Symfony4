@@ -26,15 +26,19 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
 
-
         if($form->isSubmitted() &&  $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+
+            unset($entityManager);
+            unset($form);
+            $entityManager = $this->getDoctrine()->getManager();
+            $form = $this->createForm(UserType::class,$user);
+
             //$this->redirectToRoute('register success')
         }
-
-
 
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
