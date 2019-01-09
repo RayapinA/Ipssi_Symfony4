@@ -13,7 +13,7 @@ class HomeController extends AbstractController
      */
     public function index(UserRepository $userRepository)
     {
-
+        
         $users = $userRepository->findAll();
 
         return $this->render('home/index.html.twig', [

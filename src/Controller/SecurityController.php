@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegisterUserType;
 use App\Form\LoginUserType;
+use App\Form\ProfileUserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -58,6 +60,32 @@ class SecurityController extends AbstractController
             'controller_name' => 'SecurityController',
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/profile", name="profile")
+     */
+
+    public function profile(Request $request,EntityManagerInterface $entityManager)
+    {
+
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileUserType::class,$user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() &&  $form->isValid()){
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('home');
+
+            //$this->redirectToRoute('register success')
+        }
+        dump($user);exit();
+        return $this->render('security/profile.html.twig', [
+            'controller_name' => 'SecurityController',
+            'form' => $form->createView(),
+            'user' => $user
         ]);
     }
 }
