@@ -81,7 +81,6 @@ class SecurityController extends AbstractController
 
             //$this->redirectToRoute('register success')
         }
-        dump($user);exit();
         return $this->render('security/profile.html.twig', [
             'controller_name' => 'SecurityController',
             'form' => $form->createView(),
