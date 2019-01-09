@@ -6,11 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -48,9 +49,20 @@ class User
      */
     private $articles;
 
+    /**
+    *  @ORM\Column(type="simple_array")
+    */
+    private $roles;
+
+    /**
+    *  @ORM\Column()
+    */
+    private $password;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->roles = array("ROLE USER");
     }
 
     public function getId(): ?int
@@ -136,4 +148,38 @@ class User
 
         return $this;
     }
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+    public function getSalt()
+    {
+        return null;
+    }
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials():void
+    {
+        
+    }
+
+    
 }
