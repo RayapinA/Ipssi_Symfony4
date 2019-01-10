@@ -17,10 +17,13 @@
             </li>
         {% endfor %}
     </ul>
-<hr />
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <hr />
+    {# We can create a new article only when the authenticated it's ok #}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% endif %}
 </div>
 {% endblock %}
