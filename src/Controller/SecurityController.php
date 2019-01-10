@@ -66,25 +66,22 @@ class SecurityController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-
     public function profile(Request $request,EntityManagerInterface $entityManager)
     {
 
-        $user = $this->getUser();
-        $form = $this->createForm(ProfileUserType::class,$user);
-        $form->handleRequest($request);
+        // $user = $this->getUser();
+        // $form = $this->createForm(ProfileUserType::class,$user);
+        // $form->handleRequest($request);
 
-        if($form->isSubmitted() &&  $form->isValid()){
-            $entityManager->persist($user);
-            $entityManager->flush();
-            return $this->redirectToRoute('home');
+        // if($form->isSubmitted() &&  $form->isValid()){
+        //     $entityManager->persist($user);
+        //     $entityManager->flush();
+        //     return $this->redirectToRoute('home');
 
-            //$this->redirectToRoute('register success')
-        }
+           
+        // }
         return $this->render('security/profile.html.twig', [
             'controller_name' => 'SecurityController',
-            'form' => $form->createView(),
-            'user' => $user
-        ]);
+        ]);// 'form' => $form->createView(),
     }
 }
