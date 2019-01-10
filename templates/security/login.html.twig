@@ -2,7 +2,7 @@
 
 {% block body %}
 {% if not error is empty %}
-<span> ERREUR </span>
+    <span> La combinaison Email-Password n'est pas correcte </span>
 {% endif %}
 {{ form_start(form) }}
 {{ form_row(form.email) }}

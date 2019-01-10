@@ -22,19 +22,16 @@ class ArticleController extends AbstractController
         $form = $this->createForm(ArticleType::class,$article);
         $form->handleRequest($request);
 
-
         if($form->isSubmitted() &&  $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
-
 
             unset($entityManager);
             unset($form);
             $entityManager = $this->getDoctrine()->getManager();
             $form = $this->createForm(ArticleType::class,$article);
 
-            //$this->redirectToRoute('register success')
         }
 
         return $this->render('article/index.html.twig', [
