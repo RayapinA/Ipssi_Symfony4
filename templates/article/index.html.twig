@@ -13,7 +13,7 @@
     <ul>
         {% for article in articles %}
             <li>
-                {{article.id}}  - {{article.name}}  -  {{article.createdAt|date}} - {{article.content}} -
+                {{article.id}}  - {{article.name}}  <a href="{{ path("articleBy",{'id':article.id}) }}"> {{ (is_granted('IS_AUTHENTICATED_FULLY')) ? "Edit" : "Show" }} </a>
             </li>
         {% endfor %}
     </ul>
