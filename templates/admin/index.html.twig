@@ -9,12 +9,23 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h3> <b><u> Liste Utilisateurs </u></b> </h3>
+        <ul>
+            {% for user in users %}
+                <li>
+                    <a href="{{ path("userby",{'firstname':user.firstname}) }}"> {{user.firstname}}  -  {{user.lastname}} </a> 
+                </li>
+            {% endfor %}
+        </ul>
+    <hr />
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    <h3> <b><u> Liste Articles </u></b> </h3>
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <a href="{{ path("articleBy",{'id':article.id}) }}"> {{article.name}} </a> -  {{article.createdAt|date}}
+                </li>
+            {% endfor %}
+        </ul>
 </div>
 {% endblock %}

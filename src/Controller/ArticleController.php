@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\FirstArticle;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\FirstArticleRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+// use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,16 +49,12 @@ class ArticleController extends AbstractController
     }   
     
      /**
-     * @Route("/article/article",name="articleBy")
-     *     
-     * @ParamConverter("FirstArticle",options = {"mapping" = {"id" = "id"}})
+     * @Route("/article/{id}",name="articleBy")
      */
 
-    public function indexByName(Request $request, FirstArticleRepository $articleRepository, FirstArticle $article)
+    public function indexByName(Request $request, FirstArticleRepository $articleRepository, FirstArticle $article, User $user)
     {
-       $articles = $articleRepository->findAll();
 
-       //$article = new FirstArticle();
     //    $form = $this->createForm(ArticleType::class,$article);
     //    $form->handleRequest($request);
 
@@ -74,10 +72,11 @@ class ArticleController extends AbstractController
 
     //        //$this->redirectToRoute('register success')
     //    }
-
+ //dump($user);exit();
        return $this->render('article/oneArticle.html.twig', [
            'controller_name' => 'ArticleController',
-           'articles' => $articles,
+           'article' => $article,
+           'user' => $user
        ]);
        
    }  
