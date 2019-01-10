@@ -19,7 +19,6 @@ class AdminController extends AbstractController
         $articles = $articleRepository->findAll();
 
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
             'users' => $users,
             'articles' => $articles
         ]);

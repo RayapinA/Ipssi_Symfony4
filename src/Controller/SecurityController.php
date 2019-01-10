@@ -20,6 +20,11 @@ use Psr\Log\LoggerInterface;
 
 class SecurityController extends AbstractController
 {
+
+    public function index()
+    {
+        $this->redirectToRoute('home'); // Mettre dans le controleur action 
+    }
     /**
      * @Route("/register", name="register")
      */
@@ -41,12 +46,9 @@ class SecurityController extends AbstractController
             $logger->info('User registered now !!! ');
 
             return $this->redirectToRoute('home');
-
-            //$this->redirectToRoute('register success')
         }
 
         return $this->render('security/register.html.twig', [
-            'controller_name' => 'SecurityController',
             'form' => $form->createView()
         ]);
     }
@@ -61,7 +63,6 @@ class SecurityController extends AbstractController
         $form = $this->createForm(LoginUserType::class,$user);
 
         return $this->render('security/login.html.twig', [
-            'controller_name' => 'SecurityController',
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'form' => $form->createView()
         ]);
@@ -70,22 +71,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(Request $request,EntityManagerInterface $entityManager)
+    public function profile()
     {
-
-        // $user = $this->getUser();
-        // $form = $this->createForm(ProfileUserType::class,$user);
-        // $form->handleRequest($request);
-
-        // if($form->isSubmitted() &&  $form->isValid()){
-        //     $entityManager->persist($user);
-        //     $entityManager->flush();
-        //     return $this->redirectToRoute('home');
-
-           
-        // }
-        return $this->render('security/profile.html.twig', [
-            'controller_name' => 'SecurityController',
-        ]);// 'form' => $form->createView(),
+        return $this->render('security/profile.html.twig');
     }
 }

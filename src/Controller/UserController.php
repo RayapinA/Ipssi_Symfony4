@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,17 +28,13 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-
             unset($entityManager);
             unset($form);
             $entityManager = $this->getDoctrine()->getManager();
             $form = $this->createForm(UserType::class,$user);
-
-            //$this->redirectToRoute('register success')
         }
 
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
             'form' => $form->createView(),
             'users' => $users,
         ]);
@@ -56,9 +51,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class,$user);
         $form->handleRequest($request);
 
-
         return $this->render('user/oneUser.html.twig', [
-            'controller_name' => 'UserController',
             'user' => $user,
         ]);
     }

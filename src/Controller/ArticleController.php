@@ -35,7 +35,6 @@ class ArticleController extends AbstractController
         }
 
         return $this->render('article/index.html.twig', [
-            'controller_name' => 'ArticleController',
             'form' => $form->createView(),
             'articles' => $articles,
         ]);

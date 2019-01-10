@@ -21,12 +21,12 @@
     <p> {{ article.content}} </p>
 
     <hr />
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{# {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }} 
     
-{% endif %}
+{% endif %} #}
 </div>
 {% endblock %}
