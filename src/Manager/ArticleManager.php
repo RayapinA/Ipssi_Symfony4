@@ -4,30 +4,28 @@ namespace App\Manager;
 
 use App\Repository\FirstArticleRepository;
 use App\Entity\FirstArticle;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 
-class ArticleManager extends AbstractController
+
+class ArticleManager
 {
     private $articlerRepository;
+    private $userDoctrine;
 
-    public function __construct(FirstArticleRepository $articleRepository)
+    public function __construct(FirstArticleRepository $articleRepository, EntityManagerInterface $em)
     {
         $this->articleRepository = $articleRepository;
+        $this->userDoctrine = $em;
     }
 
     public function getAllArticle()
     {
         return $this->articleRepository->findAll();
     }
-
-    public function connect()
-    {
-        return $this->getDoctrine()->getManager();
-    }
     
     public function save(FirstArticle $article)
     {
-        $this->getDoctrine()->getManager()->persist($article);
-        $this->getDoctrine()->getManager()->flush();
+        $this->userDoctrine->persist($article);
+        $this->userDoctrine->flush();
     }
 }

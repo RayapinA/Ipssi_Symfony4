@@ -33,14 +33,11 @@ class ArticleController extends AbstractController
        $form->handleRequest($request);
 
        if($form->isSubmitted() &&  $form->isValid()){
-            $articleManager->connect();
             $articleManager->save($article);
        }
        return $this->render('article/oneArticle.html.twig', [
            'article' => $article,
            'form' => $form->createView(),
        ]); 
-           
-       
    }  
 }
