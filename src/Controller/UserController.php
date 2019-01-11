@@ -15,22 +15,11 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="user")
      */
-    public function index(Request $request, UserManager $userManager)
+    public function index(UserManager $userManager)
     {
         $users = $userManager->getAllUser();
 
-        $user = new User();
-        $form = $this->createForm(RegisterUserType::class,$user);
-        $form->handleRequest($request);
-
-
-        if($form->isSubmitted() &&  $form->isValid()){
-            $userManager->connect();
-            $userManager->save($user);
-        }
-
         return $this->render('user/index.html.twig', [
-            'form' => $form->createView(),
             'users' => $users,
         ]);
     }

@@ -14,7 +14,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article", name="article")
      */
-     public function index(Request $request, ArticleManager $articleManager)
+     public function index(ArticleManager $articleManager)
      {
         $articles = $articleManager->getAllArticle();
 
