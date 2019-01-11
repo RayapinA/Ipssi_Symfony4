@@ -24,6 +24,7 @@ class UserManager extends AbstractController
     {
         return $this->getDoctrine()->getManager();
     }
+    
     public function save(User $user)
     {
         $this->getDoctrine()->getManager()->persist($user);
