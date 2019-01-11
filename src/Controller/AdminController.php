@@ -5,18 +5,18 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Repository\UserRepository;
-use App\Repository\FirstArticleRepository;
+use App\Manager\UserManager;
+use App\Manager\ArticleManager;
 
 class AdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin")
      */
-    public function index(UserRepository $userRepository, FirstArticleRepository $articleRepository)
+    public function index(UserManager $userManager, ArticleManager $articleManager)
     {
-        $users = $userRepository->findAll();
-        $articles = $articleRepository->findAll();
+        $users = $userManager->getAllUser();
+        $articles = $articleManager->getAllArticle();
 
         return $this->render('admin/index.html.twig', [
             'users' => $users,
