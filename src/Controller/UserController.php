@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\UserRepository;
+use App\Manager\UserManager;
+use App\Form\RegisterUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,24 +15,18 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="user")
      */
-    public function index(Request $request, UserRepository $userRepository)
+    public function index(Request $request, UserManager $userManager)
     {
-        $users = $userRepository->findAll();
+        $users = $userManager->getAllUser();
 
         $user = new User();
-        $form = $this->createForm(UserType::class,$user);
+        $form = $this->createForm(RegisterUserType::class,$user);
         $form->handleRequest($request);
 
 
         if($form->isSubmitted() &&  $form->isValid()){
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            unset($entityManager);
-            unset($form);
-            $entityManager = $this->getDoctrine()->getManager();
-            $form = $this->createForm(UserType::class,$user);
+            $userManager->connect();
+            $userManager->save($user);
         }
 
         return $this->render('user/index.html.twig', [
@@ -43,11 +38,8 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{firstname}", name="userby")
      */
-    public function indexById(Request $request, UserRepository $userRepository, User $user)
+    public function indexById(Request $request, User $user)
     {
-        
-        //$currentUser = $userRepository->findBy('id');
-        //$user = new User();
         $form = $this->createForm(UserType::class,$user);
         $form->handleRequest($request);
 
